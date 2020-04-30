@@ -1,0 +1,7 @@
+/.idea
+.eslintrc
+.env
+/node_modules
+backups/*
+logs/*
+

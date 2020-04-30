@@ -1,0 +1,30 @@
+{
+  "name": "key-value-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint . --fix"
+  },
+  "author": "Vladyslav Parashchenko",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^7.1.2"
+  },
+  "dependencies": {
+    "amqp": "^0.2.7",
+    "amqplib": "^0.5.5",
+    "dotenv": "^8.2.0",
+    "lodash": "^4.17.15",
+    "uuid": "^7.0.3",
+    "winston": "^3.2.1"
+  }
+}
