@@ -4,7 +4,7 @@
   "description": "",
   "main": "app/index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha test/*/*.spec.js",
     "lint": "eslint . --fix"
   },
   "author": "Vladyslav Parashchenko",
@@ -17,7 +17,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^7.1.2"
+    "mocha": "^7.1.2",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
     "amqp": "^0.2.7",
