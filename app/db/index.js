@@ -1,47 +1,41 @@
 'use strict'
 
-const DatabaseExporter = require('./DatabaseExporter')
-const { LoggerService } = require('../Services')
+const Database = require('./Database')
+const fs = require('fs').promises
+const path = require('path')
+const { LoggerService } = require('../Services').getAppServices()
 
-class Database {
-  constructor ({ backupsPath }) {
-    this.storage = new Map()
-    this.databaseExporter = new DatabaseExporter({ backupsPath })
+async function restoreDatabase ({ backupsPath }) {
+
+  const dirFileNames = await fs.readdir(backupsPath)
+  const latestBackup = dirFileNames.sort().pop()
+
+  const database = new Database()
+  if (!latestBackup) {
+    return database
   }
 
-  set (key, value) {
-    this.storage.set(key, value)
-
-    this.exportDB()
+  const backups = await restoreBackups(path.join(backupsPath, latestBackup))
+  for (const backup of backups) {
+    Object.entries(backup).forEach(([key, value]) => database.set(key, value))
   }
 
-  get (key) {
-    return this.storage.get(key)
-  }
+  LoggerService.info(`Database restored from ${latestBackup} backup`)
 
-  delete (key) {
-    this.storage.delete(key)
-    this.exportDB()
-  }
-
-  exportDB () {
-    this.databaseExporter.exportDatabase(this)
-      .then(() => LoggerService.info('Database backupped'))
-      .catch((e) => LoggerService.error('Backup error: ', e))
-  }
-
-  getDatabaseByChunk () {
-    return Array.from(this.storage.entries()).reduce((acc, [key, value]) => {
-      if (acc[acc.length - 1].length === Database.MAX_CHUNK_ELEMENT_COUNT) {
-        acc.push({})
-      }
-
-      acc[acc.length - 1][key] = value
-      return acc
-    }, [{}])
-  }
+  return database
 }
 
-Database.MAX_CHUNK_ELEMENT_COUNT = 100
+async function restoreBackups (latestBackupPath) {
+  const dirFileNames = await fs.readdir(latestBackupPath)
+  return Promise
+    .all(dirFileNames.map(fileName => restoreBackupFile(path.join(latestBackupPath, fileName))))
+}
 
-module.exports = Database
+async function restoreBackupFile (filePath) {
+  const fileData = await fs.readFile(filePath, { encoding: 'UTF-8' })
+  return JSON.parse(fileData)
+}
+
+module.exports = {
+  restoreDatabase
+}
