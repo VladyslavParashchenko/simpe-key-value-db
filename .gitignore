@@ -1,7 +1,8 @@
 /.idea
 .eslintrc
-.env
+test/unit/.env
 /node_modules
 backups/*
 logs/*
 
+.env
