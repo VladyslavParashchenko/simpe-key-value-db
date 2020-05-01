@@ -19,7 +19,8 @@ class Database {
 
   getDatabaseByChunk () {
     return Array.from(this.storage.entries()).reduce((acc, [key, value]) => {
-      if (acc[acc.length - 1].length === Database.MAX_CHUNK_ELEMENT_COUNT) {
+      console.log(Database.MAX_CHUNK_ELEMENT_COUNT)
+      if (Object.keys(acc[acc.length - 1]).length === Database.MAX_CHUNK_ELEMENT_COUNT) {
         acc.push({})
       }
 

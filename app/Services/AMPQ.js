@@ -3,7 +3,6 @@
 const amqplib = require('amqplib')
 
 function instantiateService (serviceConfig = {}) {
-
   const { connectionUrl } = serviceConfig
 
   return {

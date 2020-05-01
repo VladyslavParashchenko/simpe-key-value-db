@@ -6,7 +6,6 @@ const path = require('path')
 const { LoggerService } = require('../Services').getAppServices()
 
 async function restoreDatabase ({ backupsPath }) {
-
   const dirFileNames = await fs.readdir(backupsPath)
   const latestBackup = dirFileNames.sort().pop()
 

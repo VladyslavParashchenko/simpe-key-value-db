@@ -6,7 +6,7 @@ const { AMQPService, DatabaseExporter } = require('./Services').getAppServices()
 const messageHandlers = require('./messageHandlers')
 
 async function startApp (appConfig = {}) {
-  const database = await Database.restoreDatabase(databaseConfig)
+  const database = await Database.restoreDatabase(appConfig)
 
   DatabaseExporter.startDatabaseExport(database)
   const sendMessage = await AMQPService.buildMessageSender(process.env.OUTCOME_QUEUE)
