@@ -13,14 +13,12 @@ class DatabaseExporter {
   async exportDatabase (database) {
     const promises = []
 
-    console.log('sf2')
     const pathToBackup = this.buildBackupChunkPath()
     await fs.mkdir(pathToBackup, { recursive: true })
 
     for (const dataChunk of database.getDatabaseByChunk()) {
       promises.push(this.saveDatabaseChunk(pathToBackup, dataChunk))
     }
-    console.log('sf')
     Promise.all(promises).then().catch((e) => this.logger.error('Backup files store error', e))
   }
 
@@ -34,24 +32,7 @@ class DatabaseExporter {
 }
 
 function instantiateService (serviceConfig = {}, { LoggerService }) {
-  let exportTimeout = null
-  const databaseExporter = new DatabaseExporter(serviceConfig, { LoggerService })
-
-  return {
-    startDatabaseExport (database) {
-      exportTimeout = setTimeout(() => {
-        databaseExporter.exportDatabase(database)
-          .then()
-          .catch((e) => {
-            clearTimeout(exportTimeout)
-            LoggerService.error('Logger error', e)
-          })
-      }, serviceConfig.databaseExportTimeout)
-    },
-    stopDatabaseExport () {
-      clearTimeout(exportTimeout)
-    }
-  }
+  return new DatabaseExporter(serviceConfig, { LoggerService })
 }
 
 module.exports = { instantiateService }
