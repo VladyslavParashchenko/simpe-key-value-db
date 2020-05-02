@@ -1,6 +1,5 @@
 'use strict'
 
-const { delay } = require('../helpers')
 const { expect } = require('chai')
 const path = require('path')
 const fs = require('fs').promises
@@ -35,9 +34,7 @@ describe('Database backup', () => {
     const database = new Database()
     Object.entries(dbData).forEach(([key, value]) => database.set(key, value))
 
-    backupService.startDatabaseExport(database)
-    await delay(500)
-    backupService.stopDatabaseExport()
+    backupService.exportDatabase(database)
 
     const [backupDir] = await fs.readdir(testBackupPath)
     const [backupFile] = await fs.readdir(path.join(testBackupPath, backupDir))
@@ -52,9 +49,7 @@ describe('Database backup', () => {
     const database = new Database()
     Object.entries(dbData).forEach(([key, value]) => database.set(key, value))
 
-    backupService.startDatabaseExport(database)
-    await delay(500)
-    backupService.stopDatabaseExport()
+    backupService.exportDatabase(database)
 
     const [backupDir] = await fs.readdir(testBackupPath)
     const backupsFiles = await fs.readdir(path.join(testBackupPath, backupDir))

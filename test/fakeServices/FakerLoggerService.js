@@ -1,8 +1,7 @@
 'use strict'
 
 module.exports = {
-  info: (...params) => {
-  },
+  info: (...params) => {},
   error: (...params) => {
     console.log(params)
   }

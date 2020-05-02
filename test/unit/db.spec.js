@@ -6,12 +6,12 @@ const { expect } = require('chai')
 describe('Database operations test', () => {
   let database = null
 
-  describe('Database Insert operation', () => {
+  describe('Database insert operation', () => {
     beforeEach(() => {
       database = new Database()
     })
 
-    it('insert to db', () => {
+    it('should insert new value to db', () => {
       const key = 'key'
       const value = 'value'
 
@@ -20,7 +20,7 @@ describe('Database operations test', () => {
       expect(database.get(key)).equal(value)
     })
 
-    it('insert to db, and rewrite values', () => {
+    it('should insert new value to db, and rewrite values', () => {
       const key = 'key'
       const value = 'value'
       const newValue = 'newValue'
@@ -32,7 +32,7 @@ describe('Database operations test', () => {
     })
   })
 
-  describe('Database Insert operation', () => {
+  describe('Database read operation', () => {
     const testedKey = 'testedKey'
     const testedValue = 'testedValue'
 
@@ -41,11 +41,11 @@ describe('Database operations test', () => {
       database.set(testedKey, testedValue)
     })
 
-    it('read from db', () => {
+    it('should read from data db', () => {
       expect(database.get(testedKey)).equal(testedValue)
     })
 
-    it('insert to db, and rewrite values', () => {
+    it('should return undefined, data by this key is not exists', () => {
       const nonexistenceKey = 'nonexistence'
       expect(database.get(nonexistenceKey)).equal(undefined)
     })
@@ -60,11 +60,11 @@ describe('Database operations test', () => {
       database.set(testedKey, testedValue)
     })
 
-    it('delete value from db', () => {
+    it('should delete value by key and return true as result', () => {
       expect(database.delete(testedKey)).equal(true)
     })
 
-    it('try to delete nonexistence value', () => {
+    it('should return false, this key is not exists in database', () => {
       const nonexistenceKey = 'nonexistence'
       expect(database.delete(nonexistenceKey)).equal(false)
     })

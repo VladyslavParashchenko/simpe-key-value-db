@@ -16,7 +16,7 @@ module.exports = {
     return { key, value: db.get(key) }
   },
   DELETE: ({ key }, db) => {
-    const { value } = db.get(key)
+    const value = db.get(key)
     db.delete(key)
     exportDatabase(db)
 
