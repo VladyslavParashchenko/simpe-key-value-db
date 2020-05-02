@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: 'rabbitmq:3.8-management'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    expose:
+      - 5672
+      - 15762
+  app:
+    build: .
+    volumes:
+      - ./backups:/home/node/app/db/backups
+      - ./logs:/home/node/app/db/logs
+    environment:
+      INCOME_QUEUE: $INCOME_QUEUE
+      OUTCOME_QUEUE: $OUTCOME_QUEUE
+      AMQP_CONNECTION_URL: $AMQP_CONNECTION_URL
+    restart: always
+    depends_on:
+      - rabbitmq
