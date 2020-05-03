@@ -18,7 +18,7 @@ function instantiateService (serviceConfig = {}) {
     },
 
     error (msg, err) {
-      logger.error('%s error: e.name: %s, e.stack %s', msg, err.name, err.stack)
+      logger.error(`${msg} error: err_name: ${err.name}, err_stack: ${err.stack}`)
     }
   }
 }
